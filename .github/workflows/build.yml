@@ -4,6 +4,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.webapp.outputs.webapp-url }}
+    steps:
+       -  uses: Azure/webapps-deploy@v3.0.0
+          id: webapp
+          with:
+           app_name: dps-gha-workshop
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+           images: 'ghcr.io/dansniderman/lesson9:latest'
+           restart: true
+      
   build:
     runs-on: ubuntu-latest
     steps:
@@ -19,3 +34,4 @@ jobs:
            push: true
            build-args: |
              NPM_TOKEN=${{ secrets.NODE_AUTH_TOKEN }}
+             
