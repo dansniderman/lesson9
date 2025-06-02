@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-LABEL: org.opencontainers.image.cource=https://github.com/dansniderman/lesson9
+LABEL org.opencontainers.image.cource=https://github.com/dansniderman/lesson9
 
 ARG NPM_TOKEN
 ENV NODE_AUTH_TOKEN=$NPM_TOKEN
